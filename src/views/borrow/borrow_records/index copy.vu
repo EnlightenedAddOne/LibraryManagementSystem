@@ -1,0 +1,150 @@
+<template>
+  <div class="page-content borrow-book">
+    <h2 class="page-title">图书借阅</h2>
+
+    <ElForm ref="formRef" :model="formData" :rules="rules" label-width="120px" class="borrow-form">
+      <ElFormItem label="图书选择" prop="bookId">
+        <ElSelect v-model="formData.bookId" placeholder="选择图书">
+          <ElOption
+            v-for="book in availableBooks"
+            :key="book.bookId"
+            :label="book.title"
+            :value="book.bookId"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <ElFormItem label="借阅人" prop="userId">
+        <ElInput v-model="formData.userId" placeholder="输入借阅人ID" />
+      </ElFormItem>
+
+      <ElFormItem label="借阅日期" prop="borrowDate">
+        <ElDatePicker
+          v-model="formData.borrowDate"
+          type="date"
+          placeholder="选择借阅日期"
+          format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD"
+        />
+      </ElFormItem>
+
+      <ElFormItem label="预计归还日期" prop="returnDate">
+        <ElDatePicker
+          v-model="formData.returnDate"
+          type="date"
+          placeholder="选择预计归还日期"
+          format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD"
+        />
+      </ElFormItem>
+
+      <div class="form-buttons">
+        <ElButton @click="goBack">取消</ElButton>
+        <ElButton type="primary" @click="handleSubmit">确认借阅</ElButton>
+      </div>
+    </ElForm>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { ref, onMounted } from 'vue'
+  import { useRouter } from 'vue-router'
+  import { ElMessage } from 'element-plus'
+  import type { FormInstance } from 'element-plus'
+  import { BookService, type Book } from '@/api/bookApi'
+  // 假设存在借阅相关的API服务
+  import { BorrowService, type BorrowRecord } from '@/api/borrowApi'
+
+  const router = useRouter()
+  const formRef = ref<FormInstance>()
+  const availableBooks = ref<Book[]>([])
+
+  // 表单数据
+  const formData = ref<Partial<BorrowRecord>>({
+    bookId: null,
+    userId: '',
+    borrowDate: new Date().toISOString().split('T')[0],
+    returnDate: ''
+  })
+
+  // 表单验证规则
+  const rules = {
+    bookId: [{ required: true, message: '请选择图书', trigger: 'change' }],
+    userId: [{ required: true, message: '请输入借阅人ID', trigger: 'blur' }],
+    borrowDate: [{ required: true, message: '请选择借阅日期', trigger: 'change' }],
+    returnDate: [{ required: true, message: '请选择预计归还日期', trigger: 'change' }]
+  }
+
+  // 获取可借阅图书列表
+  const getAvailableBooks = async () => {
+    try {
+      const res = await BookService.getBookList({ status: 0 })
+      if (res.code === 200) {
+        availableBooks.value = res.data.records
+      }
+    } catch (error) {
+      console.error('获取可借阅图书失败:', error)
+      ElMessage.error('获取图书列表失败')
+    }
+  }
+
+  // 提交借阅表单
+  const handleSubmit = async () => {
+    if (!formRef.value) return
+
+    await formRef.value.validate(async (valid) => {
+      if (valid) {
+        try {
+          const res = await BorrowService.createBorrowRecord(formData.value)
+          if (res.code === 200) {
+            ElMessage.success('借阅成功')
+            // 更新图书状态为已借出
+            await BookService.updateBook(formData.value.bookId, { status: 1 })
+            goBack()
+          } else {
+            ElMessage.error(res.message || '借阅失败')
+          }
+        } catch (error) {
+          console.error('借阅操作失败:', error)
+          ElMessage.error('借阅失败，请重试')
+        }
+      }
+    })
+  }
+
+  // 返回图书列表页
+  const goBack = () => {
+    router.push('/books/list')
+  }
+
+  onMounted(() => {
+    getAvailableBooks()
+  })
+</script>
+
+<style lang="scss" scoped>
+  .borrow-book {
+    padding: 20px;
+
+    .page-title {
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .borrow-form {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-buttons {
+      margin-top: 40px;
+      text-align: center;
+
+      .el-button {
+        min-width: 120px;
+        margin: 0 10px;
+      }
+    }
+  }
+</style>
