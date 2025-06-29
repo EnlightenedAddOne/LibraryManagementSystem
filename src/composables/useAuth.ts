@@ -20,7 +20,8 @@ export const useAuth = () => {
   const { info } = storeToRefs(userStore)
 
   // 前端按钮权限（例如：['add', 'edit']）
-  const frontendAuthList = info.value?.buttons ?? []
+  // const frontendAuthList = info.value?.buttons ?? []
+  const frontendAuthList = (info.value as any)?.buttons ?? []
 
   // 后端路由 meta 配置的权限列表（例如：[{ auth_mark: 'add' }]）
   const backendAuthList: AuthItem[] = Array.isArray(route.meta.authList)

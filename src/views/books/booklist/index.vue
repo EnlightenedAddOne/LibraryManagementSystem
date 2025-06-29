@@ -107,8 +107,8 @@
           <span class="detail-label">封面:</span>
           <div class="cover-container">
             <img
-              v-if="formData.cover || formData.coverUrl"
-              :src="formData.cover || formData.coverUrl"
+              v-if="formData.cover || formData.cover"
+              :src="formData.cover || formData.cover"
               class="detail-cover"
               alt="封面"
             />
@@ -157,25 +157,19 @@
         <ElFormItem label="封面" prop="cover">
           <ElUpload
             class="avatar-uploader"
-            :action="uploadUrl"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
           >
             <img
-              v-if="formData.cover || formData.coverUrl"
-              :src="formData.cover || formData.coverUrl"
+              v-if="formData.cover || formData.cover"
+              :src="formData.cover || formData.cover"
               class="avatar"
               alt="封面"
             />
             <ElIcon v-else class="avatar-uploader-icon"><Plus /></ElIcon>
           </ElUpload>
           <!-- 新增URL输入框 -->
-          <ElInput
-            v-model="formData.coverUrl"
-            placeholder="或输入图片URL"
-            style="margin-top: 10px"
-            @change="handleUrlChange"
-          />
+          <ElInput v-model="formData.cover" placeholder="或输入图片URL" style="margin-top: 10px" />
         </ElFormItem>
       </ElForm>
       <div class="dialog-footer">
@@ -218,17 +212,14 @@
     detailDialogVisible.value = true
   }
   // 新增URL变化处理
-  const handleUrlChange = () => {
-    if (formData.value.coverUrl) {
-      formData.value.cover = ''
-    }
-  }
+  // const handleUrlChange = () => {
+  //   console.log('用户修改了 cover URL:', formData.value.cover)
+  // }
 
   // 修改上传成功处理
   const handleAvatarSuccess = (response: any) => {
     if (response.code === 200) {
       formData.value.cover = response.data.url
-      formData.value.coverUrl = ''
     } else {
       ElMessage.error('上传失败')
     }
@@ -239,7 +230,7 @@
     dialogType.value = 'edit'
     formData.value = {
       ...row,
-      coverUrl: row.cover || '' // 初始化URL字段
+      cover: row.cover || '' // 初始化URL字段
     }
     dialogVisible.value = true
   }
@@ -252,11 +243,9 @@
       if (valid) {
         try {
           const bookData = {
-            ...formData.value,
-            cover: formData.value.cover || formData.value.coverUrl
+            ...formData.value
           }
-          delete bookData.coverUrl
-
+          console.log('提交给后端的 bookData:', bookData)
           if (dialogType.value === 'add') {
             const res = await BookService.addBook(bookData)
             if (res.code === 200) {
@@ -352,6 +341,17 @@
     formData.value = {}
     dialogVisible.value = true
   }
+
+  const rules = ref<Record<string, any>>({
+    title: [{ required: true, message: '请输入书名', trigger: 'blur' }],
+    author: [{ required: true, message: '请输入作者', trigger: 'blur' }],
+    publisher: [{ required: true, message: '请输入出版社', trigger: 'blur' }],
+    isbn: [
+      { required: true, message: '请输入ISBN', trigger: 'blur' },
+      { pattern: /^[0-9-]{10,17}$/, message: 'ISBN格式不正确', trigger: 'blur' }
+    ],
+    category: [{ required: true, message: '请选择分类', trigger: 'change' }]
+  })
 
   // 显示编辑对话框
   // const handleEdit = (row: Book) => {

@@ -245,6 +245,7 @@
 
               if (res.code === ApiStatus.success) {
                 userStore.setUserInfo(res.data)
+                // console.log('用户信息:', userStore.getUserInfo)
                 userStore.setLoginStatus(true)
                 router.push(HOME_PAGE)
               } else {

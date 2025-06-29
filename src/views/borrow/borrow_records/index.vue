@@ -272,7 +272,7 @@
       console.log('借阅记录API响应:', res)
 
       if (res.code === ApiStatus.success) {
-        let records = []
+        let records: any[] = []
 
         // 根据实际API响应结构处理数据
         if (res.data) {
@@ -283,10 +283,10 @@
           // 如果data是对象，包含records字段
           else if (res.data.records && Array.isArray(res.data.records)) {
             records = res.data.records
-            borrowPagination.total = res.data.total || res.total || 0
+            borrowPagination.total = res.data.total || 0
           }
           // 如果data是单个对象（单条记录）
-          else if (typeof res.data === 'object' && res.data.recordId) {
+          else if (typeof res.data === 'object' && res.data.records) {
             records = [res.data]
           }
           // 其他情况
@@ -329,8 +329,6 @@
         // 设置总数
         if (res.data.total !== undefined) {
           borrowPagination.total = res.data.total
-        } else if (res.total !== undefined) {
-          borrowPagination.total = res.total
         } else {
           borrowPagination.total = filteredRecords.length
         }
@@ -539,7 +537,7 @@
       formatter: (row: any) => {
         return h('div', [
           h(ArtButtonTable, {
-            type: 'view',
+            type: 'eye',
             text: '查看借阅记录',
             onClick: () => showBorrowRecordsDialog(row)
           })

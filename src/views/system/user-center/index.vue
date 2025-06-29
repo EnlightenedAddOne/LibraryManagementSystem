@@ -31,14 +31,14 @@
           </div>
 
           <!-- 可以移除或保留标签部分 -->
-          <div class="lables" v-if="false">
+          <!-- <div class="lables" v-if="false">
             <h3>标签</h3>
             <div>
               <div v-for="item in lableList" :key="item">
                 {{ item }}
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- <el-carousel class="gallery" height="160px"
@@ -186,6 +186,8 @@
     des: userInfo.value.profile?.description || '暂无介绍'
   })
 
+  console.log('userInfo.value', userInfo.value)
+
   const pwdForm = reactive({
     password: '123456',
     newPassword: '123456',
@@ -220,7 +222,7 @@
     }
   ]
 
-  const lableList: Array<string> = ['专注设计', '很有想法', '辣~', '大长腿', '川妹子', '海纳百川']
+  // const lableList: Array<string> = ['专注设计', '很有想法', '辣~', '大长腿', '川妹子', '海纳百川']
 
   // 首先定义角色类型
   type RoleType = 'R_SUPER' | 'R_ADMIN' | 'R_USER'
@@ -281,10 +283,10 @@
           email: form.email,
           phone: form.mobile,
           school: form.school,
-          sex: form.sex === '1' ? '男' : '女', // 转换性别格式
+          sex: form.sex, // 转换性别格式
           description: form.des,
-          avatar: userInfo.value.profile?.avatar || '',
-          backgroundUrl: userInfo.value.profile?.backgroundUrl || ''
+          avatar: form.avatar || '',
+          backgroundUrl: form.backgroundUrl || ''
         }
       }
 

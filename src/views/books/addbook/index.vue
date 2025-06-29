@@ -59,8 +59,8 @@
                 :before-upload="beforeCoverUpload"
               >
                 <img
-                  v-if="formData.cover || formData.coverUrl"
-                  :src="formData.cover || formData.coverUrl"
+                  v-if="formData.cover || formData.cover"
+                  :src="formData.cover || formData.cover"
                   class="cover"
                 />
                 <div v-else class="upload-placeholder">
@@ -72,7 +72,7 @@
 
               <!-- 新增URL输入框 -->
               <ElInput
-                v-model="formData.coverUrl"
+                v-model="formData.cover"
                 placeholder="或输入图片URL"
                 style="margin-top: 10px"
                 @change="handleUrlChange"
@@ -123,13 +123,12 @@
     publishDate: '',
     description: '',
     cover: '',
-    coverUrl: '', // 新增URL字段
     status: 0
   })
 
   // 新增URL变化处理
   const handleUrlChange = () => {
-    if (formData.value.coverUrl) {
+    if (formData.value.cover) {
       // 如果输入了URL，清空上传的封面
       formData.value.cover = ''
     }
@@ -139,7 +138,7 @@
   const handleCoverSuccess: UploadProps['onSuccess'] = (response) => {
     if (response.code === 200) {
       formData.value.cover = response.data.url
-      formData.value.coverUrl = '' // 清空URL
+      formData.value.cover = '' // 清空URL
       ElMessage.success('封面上传成功')
     } else {
       ElMessage.error('封面上传失败')
@@ -156,10 +155,10 @@
           // 合并封面信息
           const bookData = {
             ...formData.value,
-            cover: formData.value.cover || formData.value.coverUrl
+            cover: formData.value.cover || formData.value.cover
           }
           // 删除临时字段
-          delete bookData.coverUrl
+          delete bookData.cover
 
           const res = await BookService.addBook(bookData)
           if (res.code === 200) {
@@ -188,6 +187,16 @@
       ElMessage.error('封面图片大小不能超过 2MB!')
     }
     return isJPGOrPNG && isLt2M
+  }
+
+  // 添加表单验证规则定义
+  const rules = {
+    title: [{ required: true, message: '请输入书名', trigger: 'blur' }],
+    author: [{ required: true, message: '请输入作者', trigger: 'blur' }],
+    publisher: [{ required: true, message: '请输入出版社', trigger: 'blur' }],
+    isbn: [{ required: true, message: '请输入ISBN', trigger: 'blur' }],
+    category: [{ required: true, message: '请选择分类', trigger: 'change' }],
+    status: [{ required: true, message: '请选择状态', trigger: 'change' }]
   }
 
   // 返回列表页
