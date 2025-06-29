@@ -87,29 +87,3 @@ CREATE TABLE borrow_records (
 #
 #
 
-
--- 在借阅记录插入时自动将图书状态改为不可借阅(0)
-DELIMITER //
-CREATE TRIGGER update_book_status_after_borrow
-    AFTER INSERT ON borrow_records
-    FOR EACH ROW
-BEGIN
-    -- 仅当借阅记录未归还时更新状态
-    IF NEW.return_date IS NULL THEN
-        UPDATE book SET status = 0 WHERE book_id = NEW.book_id;
-    END IF;
-END //
-DELIMITER ;
-
--- 在借阅记录更新(归还图书)时自动将图书状态改为可借阅(1)
-DELIMITER //
-CREATE TRIGGER update_book_status_after_return
-    AFTER UPDATE ON borrow_records
-    FOR EACH ROW
-BEGIN
-    -- 仅当归还日期从NULL变为非NULL时更新状态
-    IF OLD.return_date IS NULL AND NEW.return_date IS NOT NULL THEN
-        UPDATE book SET status = 1 WHERE book_id = NEW.book_id;
-    END IF;
-END //
-DELIMITER ;

@@ -25,11 +25,12 @@ public class BookService {
     }
 
     // 更新图书信息
+// 更新图书信息
     public Book updateBook(Integer id, Book updatedBook) {
         Optional<Book> optionalBook = bookRepository.findById(id);
         if (optionalBook.isPresent()) {
             Book existingBook = optionalBook.get();
-            // 只更新非null的字段
+
             if (updatedBook.getTitle() != null) {
                 existingBook.setTitle(updatedBook.getTitle());
             }
@@ -45,18 +46,28 @@ public class BookService {
             if (updatedBook.getPublishDate() != null) {
                 existingBook.setPublishDate(updatedBook.getPublishDate());
             }
-            // 修改状态字段更新逻辑
+            if (updatedBook.getCategory() != null) {
+                existingBook.setCategory(updatedBook.getCategory());
+            }
+            if (updatedBook.getDescription() != null) {
+                existingBook.setDescription(updatedBook.getDescription());
+            }
+            if (updatedBook.getCover() != null) {
+                existingBook.setCover(updatedBook.getCover());
+            }
+            // 状态字段更新逻辑
             if (updatedBook.getStatus() != null) {
                 existingBook.setStatus(updatedBook.getStatus());
             } else {
-                // 还书操作强制设置为可借状态
-                existingBook.setStatus(1); 
+                existingBook.setStatus(1);
             }
+
             return bookRepository.save(existingBook);
         } else {
             throw new RuntimeException("Book not found with id: " + id);
         }
     }
+
 
     // 根据 ID 查询图书
     public Book getBookById(Integer id) {
