@@ -1,17 +1,33 @@
 <!-- BookBorrowTrend.vue -->
 <template>
-  <div class="card art-custom-card">
-    <div class="chart" ref="chartRef"></div>
-    <div class="text">
-      <h3 class="box-title">借阅趋势</h3>
-      <p class="subtitle">比上月 <span class="text-success">+12%</span></p>
-      <p class="subtitle">显示了图书馆近期的借阅量变化趋势，帮助了解读者活跃度</p>
-    </div>
-    <div class="list">
-      <div v-for="(item, index) in list" :key="index">
-        <p>{{ item.num }}</p>
-        <p class="subtitle">{{ item.name }}</p>
+  <div class="card art-custom-card book-borrow-trend-card">
+    <div class="content-container">
+      <!-- 图表区域 -->
+      <div class="chart-wrapper">
+        <div class="text">
+          <h3 class="box-title">借阅趋势</h3>
+          <p class="subtitle">比上月 <span class="text-success">+12%</span></p>
+          <p class="subtitle">显示了图书馆近期的借阅量变化趋势，帮助了解读者活跃度</p>
+        </div>
+        <div class="chart" ref="chartRef"></div>
       </div>
+
+      <!-- 统计数据区域（移至右侧） -->
+      <div class="stats-list">
+        <div v-for="(item, index) in list" :key="index" class="stat-item">
+          <p class="num">{{ item.num }}</p>
+          <p class="name">{{ item.name }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 装饰图片 -->
+    <div class="image-container">
+      <img
+        src="@/assets/img/home_card_bg/卡提西亚.png"
+        alt="文学少女"
+        class="trend-bg-image"
+        loading="lazy"
+      />
     </div>
   </div>
 </template>
@@ -166,5 +182,79 @@
         }
       }
     }
+  }
+
+  .content-container {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .chart-wrapper {
+    flex: 2; // 图表区域占据2/3宽度
+  }
+
+  .stats-list {
+    flex: 1; // 统计数据区域占据1/3宽度
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    margin-left: -80px; // 向左移动20px，数值可根据实际效果调整
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 15px 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+
+  .num {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .name {
+    font-size: 14px;
+    color: #666;
+  }
+
+  // 响应式调整
+  @media (max-width: 768px) {
+    .content-container {
+      flex-direction: column;
+    }
+
+    .stats-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      flex: 1 0 45%;
+    }
+  }
+
+  .image-container {
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    width: 40%;
+    height: 90%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6; // 可根据需要调整
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .trend-bg-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
   }
 </style>

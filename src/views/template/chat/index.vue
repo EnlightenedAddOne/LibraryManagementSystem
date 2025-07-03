@@ -147,6 +147,7 @@
   import avatar9 from '@/assets/img/avatar/avatar9.webp'
   import avatar10 from '@/assets/img/avatar/avatar10.webp'
   import { useCommon } from '@/composables/useCommon'
+  import axios from 'axios'
 
   const { containerMinHeight } = useCommon()
 
@@ -303,70 +304,6 @@
       time: '10:00',
       isMe: false,
       avatar: aiAvatar
-    },
-    {
-      id: 2,
-      sender: 'Ricky',
-      content: '我想了解一下系统的使用方法。',
-      time: '10:01',
-      isMe: true,
-      avatar: meAvatar
-    },
-    {
-      id: 3,
-      sender: 'Art Bot',
-      content: '好的，我来为您介绍系统的主要功能。首先，您可以通过左侧菜单访问不同的功能模块...',
-      time: '10:02',
-      isMe: false,
-      avatar: aiAvatar
-    },
-    {
-      id: 4,
-      sender: 'Ricky',
-      content: '听起来很不错，能具体讲讲数据分析部分吗？',
-      time: '10:05',
-      isMe: true,
-      avatar: meAvatar
-    },
-    {
-      id: 5,
-      sender: 'Art Bot',
-      content: '当然可以。数据分析模块可以帮助您实时监控关键指标，并生成详细的报表...',
-      time: '10:06',
-      isMe: false,
-      avatar: aiAvatar
-    },
-    {
-      id: 6,
-      sender: 'Ricky',
-      content: '太好了，那我如何开始使用呢？',
-      time: '10:08',
-      isMe: true,
-      avatar: meAvatar
-    },
-    {
-      id: 7,
-      sender: 'Art Bot',
-      content: '您可以先创建一个项目，然后在项目中添加相关的数据源，系统会自动进行分析。',
-      time: '10:09',
-      isMe: false,
-      avatar: aiAvatar
-    },
-    {
-      id: 8,
-      sender: 'Ricky',
-      content: '明白了，谢谢你的帮助！',
-      time: '10:10',
-      isMe: true,
-      avatar: meAvatar
-    },
-    {
-      id: 9,
-      sender: 'Art Bot',
-      content: '不客气，有任何问题随时联系我。',
-      time: '10:11',
-      isMe: false,
-      avatar: aiAvatar
     }
   ])
 
@@ -375,10 +312,11 @@
   const userAvatar = ref(meAvatar) // 使用导入的头像
 
   // 发送消息
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const text = messageText.value.trim()
     if (!text) return
 
+    // 先显示自己发的消息
     messages.value.push({
       id: messageId.value++,
       sender: 'Ricky',
@@ -390,6 +328,43 @@
 
     messageText.value = ''
     scrollToBottom()
+
+    // 发送给后端，获取AI回复
+    try {
+      const res = await axios.post('http://localhost:8080/api/ai/ask', { message: text })
+      if (res.data && res.data.code === 200) {
+        messages.value.push({
+          id: messageId.value++,
+          sender: 'Art Bot',
+          content: res.data.data,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isMe: false,
+          avatar: aiAvatar
+        })
+        scrollToBottom()
+      } else {
+        // 错误处理
+        messages.value.push({
+          id: messageId.value++,
+          sender: 'Art Bot',
+          content: 'AI回复失败，请稍后再试。',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isMe: false,
+          avatar: aiAvatar
+        })
+        scrollToBottom()
+      }
+    } catch {
+      messages.value.push({
+        id: messageId.value++,
+        sender: 'Art Bot',
+        content: '网络错误，AI回复失败。',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isMe: false,
+        avatar: aiAvatar
+      })
+      scrollToBottom()
+    }
   }
 
   // 滚动到底部

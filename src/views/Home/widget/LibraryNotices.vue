@@ -1,9 +1,9 @@
 <!-- LibraryNotices.vue -->
 <template>
-  <div class="card art-custom-card">
+  <div class="card art-custom-card library-notices-card">
     <div class="card-header">
       <div class="title">
-        <h4 class="box-title">图书馆公告</h4>
+        <h3 class="box-title">图书馆公告</h3>
         <p class="subtitle">最新<span class="text-success">3条</span></p>
       </div>
     </div>
@@ -14,6 +14,10 @@
         <span class="type">{{ item.type }}</span>
         <span class="target">{{ item.content }}</span>
       </div>
+    </div>
+    <!-- 装饰图片 -->
+    <div class="image-container">
+      <img src="@/assets/img/home_card_bg/ll.png" alt="ll" class="notice-bg-image" loading="lazy" />
     </div>
   </div>
 </template>
@@ -54,3 +58,31 @@
     }
   ])
 </script>
+
+<style lang="scss" scoped>
+  .library-notices-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 38%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .notice-bg-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+</style>

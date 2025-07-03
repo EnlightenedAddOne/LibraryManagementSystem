@@ -1,7 +1,7 @@
 <template>
   <div class="card about-project art-custom-card">
     <div class="content">
-      <h2 class="box-title">关于图书馆</h2>
+      <h3 class="box-title">关于图书馆</h3>
       <p class="description">{{ libraryName }} 是一座现代化的智慧图书馆</p>
       <p class="description">采用了最新的图书管理系统，提供便捷高效的借阅服务</p>
 
@@ -25,12 +25,14 @@
       </div>
     </div>
 
-    <!-- 使用占位图片或默认图片 -->
+    <!-- 使用占位图片或默认图片 src/assets/img/home_card_bg\卡提西亚.png-->
     <div class="image-container">
-      <div class="placeholder-img">
-        <i class="library-icon">📚</i>
-        <p>智慧图书馆</p>
-      </div>
+      <img
+        src="@/assets/img/home_card_bg/role.png"
+        alt="智慧图书馆"
+        class="library-image"
+        loading="lazy"
+      />
     </div>
   </div>
 </template>
@@ -50,74 +52,65 @@
   .about-project {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end; /* 改为底部对齐 */
     min-height: 300px;
     padding: 25px;
     box-sizing: border-box;
+    position: relative; /* 添加相对定位 */
+    overflow: hidden;
+  }
 
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      min-height: 250px;
+  .content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 250px;
 
-      h2 {
-        margin: 0 0 15px 0;
-        font-size: 24px;
-        font-weight: 600;
-        color: var(--art-gray-900);
-        line-height: 1.3;
-      }
-
-      .description {
-        margin: 0 0 10px 0;
-        font-size: 15px;
-        color: var(--art-gray-600);
-        line-height: 1.6;
-
-        &:last-of-type {
-          margin-bottom: 25px;
-        }
-      }
+    h2 {
+      margin: 0 0 15px 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--art-gray-900);
+      line-height: 1.3;
     }
 
-    .image-container {
-      flex-shrink: 0;
-      width: 280px;
-      height: 200px;
-      margin-left: 25px;
-      border-radius: calc(var(--custom-radius) + 4px);
-      overflow: hidden;
+    .description {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      color: var(--art-gray-600);
+      line-height: 1.6;
 
-      .placeholder-img {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          var(--el-color-primary-light-9) 0%,
-          var(--el-color-primary-light-8) 100%
-        );
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--el-color-primary);
-        border: 2px dashed var(--el-color-primary-light-7);
-        box-sizing: border-box;
-
-        .library-icon {
-          font-size: 48px;
-          margin-bottom: 10px;
-        }
-
-        p {
-          margin: 0;
-          font-size: 16px;
-          font-weight: 500;
-        }
+      &:last-of-type {
+        margin-bottom: 25px;
       }
     }
+  }
+
+  .image-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    opacity: 0.6;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .library-image {
+    max-width: 50%; // 或你想要的比例
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   .button-wrap {

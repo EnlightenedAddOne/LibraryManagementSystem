@@ -3,7 +3,7 @@
   <div class="card art-custom-card">
     <div class="card-header">
       <div class="title">
-        <h4 class="box-title">图书分类统计</h4>
+        <h3 class="box-title">图书分类统计</h3>
         <p class="subtitle">本月新增<span class="text-success">+125册</span></p>
       </div>
     </div>
