@@ -6,7 +6,6 @@
       <div class="chart-wrapper">
         <div class="text">
           <h3 class="box-title">借阅趋势</h3>
-          <p class="subtitle">比上月 <span class="text-success">+12%</span></p>
           <p class="subtitle">显示了图书馆近期的借阅量变化趋势，帮助了解读者活跃度</p>
         </div>
         <div class="chart" ref="chartRef"></div>

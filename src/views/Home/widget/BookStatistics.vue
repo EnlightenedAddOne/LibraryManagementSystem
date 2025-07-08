@@ -37,6 +37,8 @@
   import { useSettingStore } from '@/store/modules/setting'
   import { CountTo } from 'vue3-count-to'
 
+  import { getLibraryStats } from '@/api/libraryStatsApi'
+
   const { showWorkTab } = storeToRefs(useSettingStore())
 
   const dataList = reactive([
@@ -73,6 +75,20 @@
       change: '+25%'
     }
   ])
+
+  onMounted(async () => {
+    const res = await getLibraryStats()
+    if (res.code === 200 && res.data) {
+      dataList[0].num = res.data.totalBooks
+      dataList[0].change = res.data.totalBooksChange
+      dataList[1].num = res.data.totalReaders
+      dataList[1].change = res.data.totalReadersChange
+      dataList[2].num = res.data.borrowCountThisMonth
+      dataList[2].change = res.data.borrowCountChange
+      dataList[3].num = res.data.newReadersThisMonth
+      dataList[3].change = res.data.newReadersChange
+    }
+  })
 </script>
 
 <style lang="scss" scoped>
