@@ -15,6 +15,9 @@ public class AIService {
     @Value("${ai.api.key}")
     private String aiApiKey;
 
+    @Value("${ai.api.model}")
+    private String aiModel;
+
     private static final String SYSTEM_PROMPT = "你是一个乐于助人的图书馆AI助手，请用简短的、口语化的中文回答用户问题。";
 
     public String callAI(String prompt) {
@@ -22,7 +25,7 @@ public class AIService {
 
         // 构造请求体，参考官方文档
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"); // 官方推荐模型，可根据实际情况更换
+        requestBody.put("model", aiModel); // 官方推荐模型，可根据实际情况更换
         List<Map<String, String>> messages = new ArrayList<>();
         messages.add(Map.of("role", "user", "content", prompt));
         requestBody.put("messages", messages);

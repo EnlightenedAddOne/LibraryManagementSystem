@@ -78,12 +78,5 @@ CREATE TABLE borrow_records (
                                 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-# -- 插入测试数据
-# INSERT INTO borrow_records (book_id, user_id, borrow_date, return_date) VALUES
-#                                                                             (1, 2, '2025-06-01', NULL),        -- 李莉借了《Spring Boot实战》，未还
-#                                                                             (3, 3, '2025-05-20', '2025-06-05'),-- 汤姆·李借了《Effective Java》，已还
-#                                                                             (2, 4, '2025-06-03', NULL),        -- 王强借了《Java编程思想》，未还
-#                                                                             (3, 1, '2025-06-04', NULL);        -- 张三又借了《Effective Java》（可能归还后再次借出）
-#
-#
+
 

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
         @Param("startDate") LocalDateTime startDate,
         @Param("endDate") LocalDateTime endDate
     );
+
+
+    @Query("SELECT COUNT(u) FROM User u")
+    int countAll();
+
+    @Query("SELECT COUNT(u) FROM User u WHERE u.createdAt >= :start AND u.createdAt < :end")
+    int countByCreatedAtBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
