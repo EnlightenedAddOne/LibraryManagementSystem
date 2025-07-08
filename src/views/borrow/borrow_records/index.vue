@@ -40,7 +40,7 @@
         <!-- 借阅记录对话框 -->
         <ElDialog v-model="borrowDialogVisible" width="80%" align-center>
           <template #title>
-            <div style="text-align: center; font-size: 18px">用户借阅记录</div>
+            <div style="font-size: 18px; text-align: center">用户借阅记录</div>
           </template>
           <div v-if="!borrowLoading && borrowRecords.length === 0" class="empty-state">
             <p>该用户暂无借阅记录</p>
@@ -653,9 +653,9 @@
           color: var(--art-text-gray-800);
 
           .user-role {
+            margin-left: 4px;
             font-weight: normal;
             color: var(--art-text-gray-600);
-            margin-left: 4px;
           }
         }
 
@@ -669,9 +669,9 @@
   }
 
   .empty-state {
-    text-align: center;
     padding: 40px 0;
     color: var(--el-text-color-secondary);
+    text-align: center;
   }
 
   .pagination-container {

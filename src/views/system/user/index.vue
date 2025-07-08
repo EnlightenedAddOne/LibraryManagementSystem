@@ -626,9 +626,9 @@
           color: var(--art-text-gray-800);
 
           .user-role {
+            margin-left: 4px;
             font-weight: normal;
             color: var(--art-text-gray-600);
-            margin-left: 4px;
           }
         }
 

@@ -52,7 +52,7 @@
     </ElTable>
 
     <!-- 分页 -->
-    <div style="margin-top: 20px; display: flex; justify-content: center">
+    <div style="display: flex; justify-content: center; margin-top: 20px">
       <ElPagination
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"
@@ -387,11 +387,11 @@
 
     .avatar-uploader {
       :deep(.el-upload) {
-        border: 1px dashed var(--el-border-color);
-        border-radius: 6px;
-        cursor: pointer;
         position: relative;
         overflow: hidden;
+        cursor: pointer;
+        border: 1px dashed var(--el-border-color);
+        border-radius: 6px;
         transition: var(--el-transition-duration-fast);
 
         &:hover {
@@ -401,50 +401,55 @@
     }
 
     .avatar-uploader-icon {
-      font-size: 28px;
-      color: #8c939d;
       width: 178px;
       height: 178px;
-      text-align: center;
+      font-size: 28px;
       line-height: 178px;
+      color: #8c939d;
+      text-align: center;
     }
 
     .avatar {
+      display: block;
       width: 178px;
       height: 178px;
-      display: block;
     }
   }
 
   .dialog-footer {
     display: flex;
-    justify-content: flex-end;
     gap: 10px;
+    justify-content: flex-end;
     margin-top: 20px;
   }
 
   .book-detail {
     padding: 10px 0;
   }
+
   .detail-row {
     display: flex;
     margin-bottom: 16px;
     line-height: 24px;
   }
+
   .detail-label {
     width: 100px;
-    text-align: right;
     padding-right: 10px;
     font-weight: bold;
     color: #606266;
+    text-align: right;
   }
+
   .detail-value {
     flex: 1;
     word-break: break-word;
   }
+
   .cover-container {
     flex: 1;
   }
+
   .detail-cover {
     width: 120px;
     height: 160px;

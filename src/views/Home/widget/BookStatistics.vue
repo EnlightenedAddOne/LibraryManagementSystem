@@ -83,44 +83,38 @@
       height: 10px; // 从140px减少到110px
       padding: 0;
       cursor: pointer;
-      transition: all 0.3s ease;
       border: 1px solid var(--el-border-color-lighter);
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        border-color: var(--el-color-primary-light-7);
-      }
+      transition: all 0.3s ease;
 
       .card-content {
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 100%;
         padding: 15px 16px; // 从20px 18px减少到15px 16px
-        box-sizing: border-box;
 
         .text-content {
-          flex: 1;
           display: flex;
+          flex: 1;
           flex-direction: column;
           justify-content: center;
           height: 100%;
 
           .des {
-            font-size: 13px; // 从14px减少到13px
-            color: var(--art-gray-600);
             margin-bottom: 6px; // 从8px减少到6px
+            font-size: 13px; // 从14px减少到13px
             font-weight: 500;
             line-height: 1.2;
+            color: var(--art-gray-600);
           }
 
           .number {
+            margin: 4px 0; // 从6px减少到4px
             font-size: 26px; // 从32px减少到26px
             font-weight: 700;
-            color: var(--art-gray-900);
-            margin: 4px 0; // 从6px减少到4px
             line-height: 1.1;
+            color: var(--art-gray-900);
           }
 
           .change-box {
@@ -129,9 +123,9 @@
             margin-top: 2px; // 从4px减少到2px
 
             .change-text {
+              margin-right: 6px;
               font-size: 11px; // 从12px减少到11px
               color: var(--art-gray-500);
-              margin-right: 6px;
             }
 
             .change {
@@ -150,14 +144,14 @@
         }
 
         .icon-container {
-          flex-shrink: 0;
-          width: 50px; // 从60px减少到50px
-          height: 50px; // 从60px减少到50px
           display: flex;
+          flex-shrink: 0;
           align-items: center;
           justify-content: center;
-          border-radius: 10px; // 从12px减少到10px
+          width: 50px; // 从60px减少到50px
+          height: 50px; // 从60px减少到50px
           background: var(--el-color-primary-light-9);
+          border-radius: 10px; // 从12px减少到10px
           transition: all 0.3s ease;
 
           .iconfont-sys {
@@ -169,6 +163,10 @@
       }
 
       &:hover {
+        border-color: var(--el-color-primary-light-7);
+        box-shadow: 0 8px 25px rgb(0 0 0 / 15%);
+        transform: translateY(-4px);
+
         .icon-container {
           background: var(--el-color-primary-light-8);
           transform: scale(1.05);
@@ -182,7 +180,7 @@
   }
 
   // 响应式设计
-  @media screen and (max-width: 992px) {
+  @media screen and (width <= 992px) {
     .card-list {
       .statistics-card {
         height: 100px; // 从130px减少到100px
@@ -209,7 +207,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (width <= 768px) {
     .card-list {
       .statistics-card {
         height: 90px; // 从120px减少到90px
@@ -219,13 +217,13 @@
 
           .text-content {
             .des {
-              font-size: 12px; // 从13px减少到12px
               margin-bottom: 4px;
+              font-size: 12px; // 从13px减少到12px
             }
 
             .number {
-              font-size: 20px; // 从24px减少到20px
               margin: 2px 0;
+              font-size: 20px; // 从24px减少到20px
             }
 
             .change-box {
@@ -255,7 +253,7 @@
     }
   }
 
-  @media screen and (max-width: 576px) {
+  @media screen and (width <= 576px) {
     .card-list {
       .statistics-card {
         height: 85px; // 从110px减少到85px
@@ -265,13 +263,13 @@
 
           .text-content {
             .des {
-              font-size: 11px;
               margin-bottom: 3px;
+              font-size: 11px;
             }
 
             .number {
-              font-size: 18px; // 从22px减少到18px
               margin: 1px 0;
+              font-size: 18px; // 从22px减少到18px
             }
 
             .change-box {
@@ -305,6 +303,10 @@
 
       &:hover {
         border-color: var(--el-color-primary-light-5);
+
+        .icon-container {
+          background: #374151;
+        }
       }
 
       .card-content {
@@ -330,12 +332,6 @@
           .iconfont-sys {
             color: var(--el-color-primary-light-3);
           }
-        }
-      }
-
-      &:hover {
-        .icon-container {
-          background: #374151;
         }
       }
     }

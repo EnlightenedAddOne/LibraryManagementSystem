@@ -69,20 +69,20 @@
     position: absolute;
     right: 0;
     bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
     width: 38%;
     height: 100%;
-    z-index: 1;
     pointer-events: none;
     opacity: 0.5;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
   }
 
   .notice-bg-image {
+    display: block;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    display: block;
   }
 </style>

@@ -16,6 +16,8 @@
   import { hexToRgba, getCssVar } from '@/utils/ui'
   import { EChartsOption } from 'echarts'
   import { useChart } from '@/composables/useChart'
+  import { ref, onMounted, watch } from 'vue'
+  import { getLibraryStats } from '@/api/libraryStatsApi' // 新增
 
   const {
     chartRef,
@@ -28,9 +30,24 @@
     getSplitLineStyle
   } = useChart()
 
-  const realData = [480, 320, 280, 240, 180, 160, 140, 120, 100, 80, 75, 65]
+  const realData = ref<number[]>([])
+  const categoryNames = ref<string[]>([])
 
-  const initChartWithAnimation = () => {
+  const fetchCategoryData = async () => {
+    const res = await getLibraryStats()
+    if (res.code === 200 && res.data && res.data.bookCategoryCount) {
+      // bookCategoryCount: { "教育": 3, ... }
+      categoryNames.value = Object.keys(res.data.bookCategoryCount)
+      realData.value = Object.values(res.data.bookCategoryCount)
+    } else {
+      // 若无数据，给默认值
+      categoryNames.value = []
+      realData.value = []
+    }
+  }
+
+  const initChartWithAnimation = async () => {
+    await fetchCategoryData()
     initChart(options(true))
     updateChart(options(false))
   }
@@ -62,20 +79,7 @@
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: [
-          '文学',
-          '历史',
-          '科技',
-          '艺术',
-          '哲学',
-          '经济',
-          '教育',
-          '医学',
-          '法律',
-          '工程',
-          '语言',
-          '其他'
-        ],
+        data: categoryNames.value,
         axisTick: getAxisTickStyle(),
         axisLabel: getAxisLabelStyle(true),
         axisLine: getAxisLineStyle(true)
@@ -83,7 +87,7 @@
       yAxis: {
         type: 'value',
         min: 0,
-        max: realData.reduce((prev, curr) => Math.max(prev, curr), 0),
+        max: realData.value.reduce((prev, curr) => Math.max(prev, curr), 0),
         axisLabel: getAxisLabelStyle(true),
         axisLine: getAxisLineStyle(!isDark.value),
         splitLine: getSplitLineStyle(true)
@@ -94,7 +98,7 @@
           color: getCssVar('--main-color'),
           type: 'line',
           stack: '总量',
-          data: isInit ? new Array(12).fill(0) : realData,
+          data: isInit ? new Array(categoryNames.value.length).fill(0) : realData.value,
           smooth: true,
           symbol: 'none',
           lineStyle: {

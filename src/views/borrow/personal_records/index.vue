@@ -521,42 +521,42 @@
   .personal-records-page {
     .top-section {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
 
       .stats-cards {
         display: flex;
         gap: 16px;
 
         .stat-card {
-          color: white;
-          padding: 20px;
-          border-radius: 12px;
-          text-align: center;
           min-width: 100px;
+          padding: 20px;
+          color: white;
+          text-align: center;
+          border-radius: 12px;
 
           &.total {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgb(102 126 234 / 30%);
           }
 
           &.overdue {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
+            box-shadow: 0 4px 12px rgb(240 147 251 / 30%);
           }
 
           &.borrowing {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 4px 12px rgb(79 172 254 / 30%);
           }
 
           .stat-number {
+            margin-bottom: 8px;
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 8px;
           }
 
           .stat-label {
@@ -576,16 +576,16 @@
 
       .filter-row {
         display: flex;
+        flex-wrap: wrap;
         gap: 16px;
         align-items: center;
-        flex-wrap: wrap;
       }
     }
 
     .table-card {
       .table-container {
-        overflow: auto; // 添加滚动支持
         max-height: 70vh; // 限制最大高度
+        overflow: auto; // 添加滚动支持
       }
 
       // 确保表格内容可以正常滚动
@@ -594,22 +594,23 @@
           overflow-y: auto !important;
         }
       }
+
       .book-info {
         display: flex;
-        align-items: center;
         gap: 12px;
+        align-items: center;
 
         .book-cover-container {
-          width: 50px;
-          height: 65px;
-          border-radius: 6px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          flex-shrink: 0;
-          overflow: hidden;
           display: flex;
+          flex-shrink: 0;
           align-items: center;
           justify-content: center;
+          width: 50px;
+          height: 65px;
+          overflow: hidden;
           background: var(--el-fill-color-light);
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
 
           .book-cover {
             width: 100%;
@@ -618,11 +619,11 @@
           }
 
           .no-cover {
+            padding: 4px;
             font-size: 12px;
+            line-height: 1.2;
             color: var(--el-text-color-placeholder);
             text-align: center;
-            padding: 4px;
-            line-height: 1.2;
           }
         }
 
@@ -631,16 +632,16 @@
           min-width: 0;
 
           .book-title {
+            margin-bottom: 4px;
             font-weight: 600;
             color: var(--el-text-color-primary);
-            margin-bottom: 4px;
             word-break: break-word;
           }
 
           .book-meta {
+            margin-bottom: 4px;
             font-size: 13px;
             color: var(--el-text-color-regular);
-            margin-bottom: 4px;
 
             .divider {
               margin: 0 6px;
@@ -649,12 +650,12 @@
           }
 
           .book-category {
+            display: inline-block;
+            padding: 2px 8px;
             font-size: 12px;
             color: var(--el-text-color-secondary);
             background: var(--el-fill-color-light);
-            padding: 2px 8px;
             border-radius: 12px;
-            display: inline-block;
           }
         }
       }
@@ -669,27 +670,27 @@
           }
 
           .label {
-            color: var(--el-text-color-secondary);
             margin-right: 8px;
+            color: var(--el-text-color-secondary);
           }
 
           .value {
-            color: var(--el-text-color-primary);
             font-weight: 500;
+            color: var(--el-text-color-primary);
           }
         }
       }
 
       .returned-text {
-        color: var(--el-text-color-secondary);
         font-size: 14px;
+        color: var(--el-text-color-secondary);
       }
 
       .pagination-container {
         display: flex;
         justify-content: flex-end;
-        margin-top: 20px;
         padding-top: 20px;
+        margin-top: 20px;
         border-top: 1px solid var(--el-border-color-lighter);
       }
     }
@@ -697,24 +698,24 @@
     .return-dialog-content {
       .book-summary {
         display: flex;
-        align-items: center;
         gap: 16px;
+        align-items: center;
         padding: 16px;
+        margin-bottom: 20px;
         background: var(--el-fill-color-extra-light);
         border-radius: 8px;
-        margin-bottom: 20px;
 
         .dialog-book-cover-container {
-          width: 60px;
-          height: 80px;
-          border-radius: 6px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          flex-shrink: 0;
-          overflow: hidden;
           display: flex;
+          flex-shrink: 0;
           align-items: center;
           justify-content: center;
+          width: 60px;
+          height: 80px;
+          overflow: hidden;
           background: var(--el-fill-color-light);
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
 
           .dialog-book-cover {
             width: 100%;
@@ -723,11 +724,11 @@
           }
 
           .dialog-no-cover {
+            padding: 4px;
             font-size: 12px;
+            line-height: 1.2;
             color: var(--el-text-color-placeholder);
             text-align: center;
-            padding: 4px;
-            line-height: 1.2;
           }
         }
 
@@ -735,25 +736,25 @@
           flex: 1;
 
           h4 {
-            margin: 0 0 8px 0;
-            color: var(--el-text-color-primary);
+            margin: 0 0 8px;
             font-weight: 600;
+            color: var(--el-text-color-primary);
           }
 
           p {
             margin: 4px 0;
-            color: var(--el-text-color-regular);
             font-size: 14px;
+            color: var(--el-text-color-regular);
 
             &.borrow-date {
-              color: var(--el-text-color-secondary);
-              font-size: 13px;
               margin-top: 8px;
+              font-size: 13px;
+              color: var(--el-text-color-secondary);
             }
 
             &.due-date {
-              color: var(--el-text-color-secondary);
               font-size: 13px;
+              color: var(--el-text-color-secondary);
             }
           }
         }
@@ -762,7 +763,7 @@
   }
 
   // 响应式设计
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .personal-records-page {
       .top-section {
         flex-direction: column;

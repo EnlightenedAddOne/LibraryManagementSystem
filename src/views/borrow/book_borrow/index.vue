@@ -43,7 +43,7 @@
       <ElTableColumn fixed="right" label="操作" width="150">
         <template #default="scope">
           <ArtButtonTable
-            style="background-color: #eef3ff; border-color: #ffffff; color: #329ff5"
+            style="color: #329ff5; background-color: #eef3ff; border-color: #fff"
             type="success"
             :disabled="scope.row.status !== 1"
             @click="handleBorrow(scope.row)"
@@ -58,7 +58,7 @@
     </ElTable>
 
     <!-- 分页 -->
-    <div style="margin-top: 20px; display: flex; justify-content: center">
+    <div style="display: flex; justify-content: center; margin-top: 20px">
       <ElPagination
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"
@@ -331,8 +331,8 @@
 
   .dialog-footer {
     display: flex;
-    justify-content: flex-end;
     gap: 10px;
+    justify-content: flex-end;
     margin-top: 20px;
   }
 
@@ -348,10 +348,10 @@
 
   .detail-label {
     width: 100px;
-    text-align: right;
     padding-right: 10px;
     font-weight: bold;
     color: #606266;
+    text-align: right;
   }
 
   .detail-value {

@@ -240,10 +240,10 @@
         :deep(.el-upload) {
           width: 300px;
           height: 400px;
+          overflow: hidden;
+          cursor: pointer;
           border: 1px dashed var(--el-border-color);
           border-radius: 6px;
-          cursor: pointer;
-          overflow: hidden;
 
           &:hover {
             border-color: var(--el-color-primary);
@@ -294,7 +294,7 @@
   }
 
   // 响应式布局
-  @media (max-width: 1200px) {
+  @media (width <= 1200px) {
     .add-book {
       .book-form {
         .form-container {

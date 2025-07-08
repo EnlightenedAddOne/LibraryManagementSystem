@@ -50,38 +50,38 @@
 
 <style lang="scss" scoped>
   .about-project {
+    position: relative; /* 添加相对定位 */
+    box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end; /* 改为底部对齐 */
+    justify-content: space-between;
     min-height: 300px;
     padding: 25px;
-    box-sizing: border-box;
-    position: relative; /* 添加相对定位 */
     overflow: hidden;
   }
 
   .content {
     position: relative;
     z-index: 2;
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: flex-start;
     min-height: 250px;
 
     h2 {
-      margin: 0 0 15px 0;
+      margin: 0 0 15px;
       font-size: 24px;
       font-weight: 600;
-      color: var(--art-gray-900);
       line-height: 1.3;
+      color: var(--art-gray-900);
     }
 
     .description {
-      margin: 0 0 10px 0;
+      margin: 0 0 10px;
       font-size: 15px;
-      color: var(--art-gray-600);
       line-height: 1.6;
+      color: var(--art-gray-600);
 
       &:last-of-type {
         margin-bottom: 25px;
@@ -93,36 +93,37 @@
     position: absolute;
     right: 0;
     bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
+    pointer-events: none;
     border-radius: 0;
     opacity: 0.6;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
   }
 
   .library-image {
+    display: block;
     max-width: 50%; // 或你想要的比例
     max-height: 100%;
     object-fit: contain;
-    display: block;
   }
 
   .button-wrap {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-top: auto;
     width: 100%;
     max-width: 500px;
+    margin-top: auto;
   }
 
   .btn {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -136,14 +137,13 @@
     border: 1px solid var(--el-border-color-lighter);
     border-radius: calc(var(--custom-radius));
     transition: all 0.3s ease;
-    box-sizing: border-box;
 
     &:hover {
+      color: var(--el-color-primary);
       background: var(--el-color-primary-light-9);
       border-color: var(--el-color-primary-light-6);
-      color: var(--el-color-primary);
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     span {
@@ -163,10 +163,11 @@
   }
 
   // 响应式设计
-  @media screen and (max-width: 1200px) {
+  @media screen and (width <= 1200px) {
     .about-project {
       display: flex;
       align-items: center;
+
       .image-container {
         width: 240px;
         height: 180px;
@@ -175,7 +176,7 @@
     }
   }
 
-  @media screen and (max-width: 992px) {
+  @media screen and (width <= 992px) {
     .about-project {
       flex-direction: column;
       min-height: auto;
@@ -201,7 +202,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (width <= 768px) {
     .about-project {
       padding: 20px;
 
@@ -231,7 +232,7 @@
     }
   }
 
-  @media screen and (max-width: 576px) {
+  @media screen and (width <= 576px) {
     .button-wrap {
       grid-template-columns: 1fr;
     }
@@ -250,22 +251,22 @@
     .about-project {
       .image-container {
         .placeholder-img {
+          color: var(--el-color-primary-light-3);
           background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
           border-color: #374151;
-          color: var(--el-color-primary-light-3);
         }
       }
     }
 
     .btn {
+      color: #d1d5db;
       background: #1f2937;
       border-color: #374151;
-      color: #d1d5db;
 
       &:hover {
+        color: var(--el-color-primary-light-3);
         background: #374151;
         border-color: var(--el-color-primary);
-        color: var(--el-color-primary-light-3);
       }
     }
   }

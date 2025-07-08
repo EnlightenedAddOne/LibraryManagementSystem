@@ -14,7 +14,7 @@
 
       <!-- 统计数据区域（移至右侧） -->
       <div class="stats-list">
-        <div v-for="(item, index) in list" :key="index" class="stat-item">
+        <div v-for="(item, index) in statsList" :key="index" class="stat-item">
           <p class="num">{{ item.num }}</p>
           <p class="name">{{ item.name }}</p>
         </div>
@@ -37,6 +37,8 @@
   import { getCssVar } from '@/utils/ui'
   import { useChart } from '@/composables/useChart'
   import { EChartsOption } from 'echarts'
+  import { ref, onMounted, watch } from 'vue'
+  import { getLibraryStats } from '@/api/libraryStatsApi'
 
   const {
     chartRef,
@@ -48,12 +50,37 @@
     getSplitLineStyle
   } = useChart()
 
-  const list = [
-    { name: '总借阅量', num: '8.2k' },
-    { name: '在借图书', num: '2.1k' },
-    { name: '日均借阅', num: '105' },
-    { name: '归还率', num: '98%' }
-  ]
+  // 右侧统计数据
+  const statsList = ref([
+    { name: '总借阅量', num: '--' },
+    { name: '在借图书', num: '--' },
+    { name: '日均借阅', num: '--' },
+    { name: '归还率', num: '--' }
+  ])
+
+  // 图表数据
+  const xAxisLabels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+  const barData = ref<number[]>([0, 0, 0, 0, 0, 0, 0])
+
+  const fetchData = async () => {
+    const res = await getLibraryStats()
+    if (res.code === 200 && res.data) {
+      // 右侧统计数据
+      statsList.value = [
+        { name: '总借阅量', num: `${res.data.totalBorrowCount ?? '--'}` },
+        { name: '在借图书', num: `${res.data.currentBorrowingCount ?? '--'}` },
+        { name: '日均借阅', num: `${res.data.lastWeekAvgBorrow ?? '--'}` },
+        { name: '归还率', num: `${res.data.lastWeekReturnRate ?? '--'}` }
+      ]
+      // 图表数据处理
+      // lastWeekBorrowCountPerDay: { "2025-06-30": 0, ... }
+      const dayMap = res.data.lastWeekBorrowCountPerDay || {}
+      // 获取日期并排序
+      const days = Object.keys(dayMap).sort()
+      // 只取前7天，按顺序映射到周一~周日
+      barData.value = days.slice(0, 7).map((d) => dayMap[d])
+    }
+  }
 
   const options: () => EChartsOption = () => {
     return {
@@ -69,7 +96,7 @@
       },
       xAxis: {
         type: 'category',
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '本周', '预测'],
+        data: xAxisLabels,
         axisTick: getAxisTickStyle(),
         axisLine: getAxisLineStyle(true),
         axisLabel: getAxisLabelStyle(true)
@@ -81,7 +108,7 @@
       },
       series: [
         {
-          data: [120, 98, 135, 110, 158, 95, 142, 128, 145],
+          data: barData.value,
           type: 'bar',
           itemStyle: {
             borderRadius: 4,
@@ -109,7 +136,8 @@
     initChart(options())
   })
 
-  onMounted(() => {
+  onMounted(async () => {
+    await fetchData()
     initChart(options())
   })
 </script>
@@ -120,8 +148,8 @@
     flex-direction: column;
     padding: 20px;
     background-color: var(--art-main-bg-color);
-    border-radius: var(--custom-radius);
     border: 1px solid var(--el-border-color-lighter);
+    border-radius: var(--custom-radius);
 
     .chart {
       height: 200px;
@@ -132,20 +160,20 @@
       margin-bottom: 20px;
 
       h3.box-title {
+        margin-bottom: 8px;
         font-size: 18px;
         font-weight: 600;
         color: var(--art-gray-900);
-        margin-bottom: 8px;
       }
 
       p.subtitle {
+        margin: 4px 0;
         font-size: 13px;
         color: var(--art-gray-600);
-        margin: 4px 0;
 
         span.text-success {
-          color: var(--el-color-success);
           font-weight: 500;
+          color: var(--el-color-success);
         }
       }
 
@@ -158,27 +186,27 @@
 
     .list {
       display: flex;
-      justify-content: space-between;
       gap: 12px;
+      justify-content: space-between;
 
       div {
         flex: 1;
+        padding: 10px;
         text-align: center;
         background: var(--el-color-primary-light-9);
-        padding: 10px;
         border-radius: 8px;
 
         p:first-child {
+          margin-bottom: 6px;
           font-size: 20px;
           font-weight: bold;
           color: var(--el-color-primary);
-          margin-bottom: 6px;
         }
 
         p.subtitle {
+          margin: 0;
           font-size: 13px;
           color: var(--art-gray-600);
-          margin: 0;
         }
       }
     }
@@ -186,8 +214,8 @@
 
   .content-container {
     display: flex;
-    width: 100%;
     gap: 20px;
+    width: 100%;
   }
 
   .chart-wrapper {
@@ -195,25 +223,25 @@
   }
 
   .stats-list {
-    flex: 1; // 统计数据区域占据1/3宽度
     display: flex;
+    flex: 1; // 统计数据区域占据1/3宽度
     flex-direction: column;
-    justify-content: center;
     gap: 20px;
-    margin-left: -80px; // 向左移动20px，数值可根据实际效果调整
+    justify-content: center;
+    margin-left: -110px; // 向左移动20px，数值可根据实际效果调整
   }
 
   .stat-item {
-    text-align: center;
     padding: 15px 10px;
-    background-color: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    background-color: rgb(255 255 255 / 5%);
     border-radius: 8px;
   }
 
   .num {
+    margin-bottom: 5px;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 5px;
   }
 
   .name {
@@ -222,14 +250,13 @@
   }
 
   // 响应式调整
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .content-container {
       flex-direction: column;
     }
 
     .stats-list {
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-flow: row wrap;
     }
 
     .stat-item {
@@ -241,20 +268,20 @@
     position: absolute;
     right: 0;
     bottom: 25px;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
     width: 40%;
     height: 90%;
-    z-index: 1;
     pointer-events: none;
     opacity: 0.6; // 可根据需要调整
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
   }
 
   .trend-bg-image {
+    display: block;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    display: block;
   }
 </style>

@@ -40,6 +40,7 @@
 
 <style lang="scss" scoped>
   @use './style';
+
   .uniform-card {
     height: 100%;
     min-height: 300px; // 根据实际情况调整高度值
