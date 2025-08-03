@@ -1,0 +1,1 @@
+import{r as s,_ as a}from"./index-D1Hg0Vwf.js";import{k as e,m as t,t as r,p as o,q as n,u as l}from"./vendor-CJD3O2Jl.js";const i=a(e({__name:"ArtTableFullScreen",setup(a){const{containerMinHeight:e}=s();return(s,a)=>(r(),t("div",{class:"art-table-full-screen",style:n({height:l(e)})},[o(s.$slots,"default",{},void 0,!0)],4))}}),[["__scopeId","data-v-9f276ea2"]]);export{i as _};

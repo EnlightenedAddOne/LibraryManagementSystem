@@ -1,0 +1,1 @@
+import{j as t}from"./index-D1Hg0Vwf.js";class o{static getBookList(o){return t.get({url:"/books",params:o})}static addBook(o){return t.post({url:"/books",data:o})}static updateBook(o,r){return t.put({url:`/books/${o}`,data:r})}static deleteBook(o){return t.del({url:`/books/${o}`})}static getBookDetail(o){return t.get({url:`/books/${o}`})}}export{o as B};

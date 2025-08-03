@@ -1,0 +1,52 @@
+services:
+  database:
+    image: mysql:8.0
+    container_name: book-database
+    environment:
+      - MYSQL_ROOT_PASSWORD=0128
+      - MYSQL_DATABASE=library
+      - MYSQL_USER=book_app_user
+      - MYSQL_PASSWORD=SecurePassword123!
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - book-network
+    ports:
+      - "3306:3306"  # 添加端口映射
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  frontend:
+    build: ./frontend
+    container_name: book-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - book-network
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: book-backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/library
+      - SPRING_DATASOURCE_USERNAME=book_app_user
+      - SPRING_DATASOURCE_PASSWORD=SecurePassword123!
+    restart: unless-stopped
+    networks:
+      - book-network
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  db_data:
+
+networks:
+  book-network:
+    driver: bridge
