@@ -145,7 +145,8 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Home,
     meta: {
       title: '图书管理',
-      icon: '&#xe7bc;'
+      icon: '&#xe7bc;',
+      roles: ['R_SUPER', 'R_ADMIN']
     },
     children: [
       {
@@ -154,8 +155,6 @@ export const asyncRoutes: AppRouteRecord[] = [
         component: RoutesAlias.BookList, // 图书列表组件
         meta: {
           title: '图书列表'
-          // keepAlive: false,
-          // icon: '&#xe828;'
         }
       },
       {

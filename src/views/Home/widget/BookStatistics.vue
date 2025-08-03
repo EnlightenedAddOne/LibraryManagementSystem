@@ -51,7 +51,7 @@
       change: '+8%'
     },
     {
-      des: '在馆读者数',
+      des: '读者总数',
       icon: '&#xe724;',
       startVal: 0,
       duration: 1000,
