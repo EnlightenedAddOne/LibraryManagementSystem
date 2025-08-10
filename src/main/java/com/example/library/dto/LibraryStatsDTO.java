@@ -24,6 +24,9 @@ public class LibraryStatsDTO {
     private String lastWeekReturnRate; 
     
     private int totalBorrowCount;
+
+    private int newBooksThisMonth;
+
     // getter 和 setter 方法
     public int getTotalBooks() {
         return totalBooks;
@@ -143,5 +146,13 @@ public class LibraryStatsDTO {
 
     public void setLastWeekBorrowCountPerDay(Map<String, Integer> lastWeekBorrowCountPerDay) {
         this.lastWeekBorrowCountPerDay = lastWeekBorrowCountPerDay;
+    }
+
+    public int getNewBooksThisMonth() {
+        return newBooksThisMonth;
+    }
+
+    public void setNewBooksThisMonth(int newBooksThisMonth) {
+        this.newBooksThisMonth = newBooksThisMonth;
     }
 }

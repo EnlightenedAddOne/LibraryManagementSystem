@@ -89,6 +89,12 @@ public class LibraryStatsService {
         }
         dto.setBookCategoryCount(categoryCount);
 
+        // 计算本月新增图书数目
+        int newBooksThisMonth = bookRepository.countByCreateTimeBetween(
+                toDate(startOfThisMonth.toLocalDate()),
+                toDate(now.toLocalDate())
+        );
+        dto.setNewBooksThisMonth(newBooksThisMonth);
 
          // 计算上周一和上周日
         LocalDate today = LocalDate.now();
