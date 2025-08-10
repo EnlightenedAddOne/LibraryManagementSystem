@@ -31,5 +31,7 @@ export interface LibraryStatsResponse {
     lastWeekAvgBorrow: number // 上周日均借阅量
     lastWeekReturnRate: string // 上周归还率
     totalBorrowCount: number // 系统总借阅量
+
+    newBooksThisMonth: number // 本月新增图书
   }
 }

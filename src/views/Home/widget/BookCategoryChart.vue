@@ -4,7 +4,9 @@
     <div class="card-header">
       <div class="title">
         <h3 class="box-title">图书分类统计</h3>
-        <p class="subtitle">本月新增<span class="text-success">+125册</span></p>
+        <p class="subtitle"
+          >本月新增<span class="text-success">+{{ newBooksThisMonth }}册</span></p
+        >
       </div>
     </div>
     <div class="chart" ref="chartRef"></div>
@@ -32,13 +34,19 @@
 
   const realData = ref<number[]>([])
   const categoryNames = ref<string[]>([])
+  const newBooksThisMonth = ref<number>(0) // 新增：本月新增图书数量
 
   const fetchCategoryData = async () => {
     const res = await getLibraryStats()
+    console.log('API返回的完整数据:', res)
+    console.log('res.data:', res.data)
     if (res.code === 200 && res.data && res.data.bookCategoryCount) {
       // bookCategoryCount: { "教育": 3, ... }
       categoryNames.value = Object.keys(res.data.bookCategoryCount)
       realData.value = Object.values(res.data.bookCategoryCount)
+
+      // 获取本月新增图书数量
+      newBooksThisMonth.value = (res.data as any).newBooksThisMonth ?? 0
     } else {
       // 若无数据，给默认值
       categoryNames.value = []

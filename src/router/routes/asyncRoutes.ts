@@ -1,6 +1,6 @@
 import { RoutesAlias } from '../routesAlias'
 import { AppRouteRecord } from '@/types/router'
-import { WEB_LINKS } from '@/utils/constants'
+// import { WEB_LINKS } from '@/utils/constants'
 
 /**
  * 菜单列表、异步路由
@@ -205,28 +205,28 @@ export const asyncRoutes: AppRouteRecord[] = [
         }
       }
     ]
-  },
-  {
-    name: 'Help',
-    path: '/help',
-    component: RoutesAlias.Home,
-    meta: {
-      title: 'menus.help.title',
-      icon: '&#xe719;',
-      keepAlive: false,
-      roles: ['R_SUPER', 'R_ADMIN']
-    },
-    children: [
-      {
-        path: '',
-        name: 'Document',
-        meta: {
-          title: 'menus.help.document',
-          link: WEB_LINKS.DOCS,
-          isIframe: false,
-          keepAlive: false
-        }
-      }
-    ]
   }
+  // {
+  //   name: 'Help',
+  //   path: '/help',
+  //   component: RoutesAlias.Home,
+  //   meta: {
+  //     title: 'menus.help.title',
+  //     icon: '&#xe719;',
+  //     keepAlive: false,
+  //     roles: ['R_SUPER', 'R_ADMIN']
+  //   },
+  //   children: [
+  //     {
+  //       path: '',
+  //       name: 'Document',
+  //       meta: {
+  //         title: 'menus.help.document',
+  //         link: WEB_LINKS.DOCS,
+  //         isIframe: false,
+  //         keepAlive: false
+  //       }
+  //     }
+  //   ]
+  // }
 ]
