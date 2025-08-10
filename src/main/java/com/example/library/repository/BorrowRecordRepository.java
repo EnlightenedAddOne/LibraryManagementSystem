@@ -7,15 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+// import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface BorrowRecordRepository extends JpaRepository<BorrowRecord, Integer> {
     List<BorrowRecord> findByUserId(Integer userId);
 
-    @Query("SELECT COUNT(br) FROM BorrowRecord br WHERE br.borrowDate >= :start AND br.borrowDate <= :end")
-    int countByBorrowDateBetween(@Param("start") Date start, @Param("end") Date end);
+    // @Query("SELECT COUNT(br) FROM BorrowRecord br WHERE br.borrowDate >= :start AND br.borrowDate <= :end")
+    // int countByBorrowDateBetween(@Param("start") Date start, @Param("end") Date end);
 
     // 借阅时间区间统计
     @Query("SELECT COUNT(br) FROM BorrowRecord br WHERE br.borrowDate >= :start AND br.borrowDate <= :end")

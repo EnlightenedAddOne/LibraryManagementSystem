@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.time.LocalDateTime;
 
 @Service
 public class LibraryStatsService {
@@ -50,20 +49,26 @@ public class LibraryStatsService {
         dto.setTotalReadersChange(calcChange(totalReaders, lastMonthReaders));
 
         // 3. 本月借阅量及变化
+        LocalDateTime endOfThisMonth = LocalDateTime.now(); // 统计到此刻
+
         int borrowThisMonth = borrowRecordRepository.countByBorrowDateBetween(
-                toDate(YearMonth.now().atDay(1)),
-                toDate(LocalDate.now())
+        startOfThisMonth,
+        endOfThisMonth
         );
+
+//        LocalDateTime startOfLastMonth = YearMonth.now().minusMonths(1).atDay(1).atStartOfDay();
+        LocalDateTime endOfLastMonth = YearMonth.now().atDay(1).atStartOfDay().minusSeconds(1);
+
         int borrowLastMonth = borrowRecordRepository.countByBorrowDateBetween(
-                toDate(YearMonth.now().minusMonths(1).atDay(1)),
-                toDate(YearMonth.now().atDay(1).minusDays(1))
+        startOfLastMonth,
+        endOfLastMonth
         );
         dto.setBorrowCountThisMonth(borrowThisMonth);
         dto.setBorrowCountChange(calcChange(borrowThisMonth, borrowLastMonth));
 
         // 4. 本月新增读者及变化
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime endOfLastMonth = startOfThisMonth.minusSeconds(1);
+//        LocalDateTime endOfLastMonth = startOfThisMonth.minusSeconds(1);
 
         int newReadersThisMonth = userRepository.countByCreatedAtBetween(
                 startOfThisMonth,

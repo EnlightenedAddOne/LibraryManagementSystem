@@ -1,3 +1,9 @@
+-- 创建数据库（如果不存在）
+CREATE DATABASE IF NOT EXISTS library CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+-- 使用该数据库
+USE library;
+
 # 图书表
 CREATE TABLE book (
                       book_id INT AUTO_INCREMENT PRIMARY KEY, -- 图书ID
@@ -72,11 +78,11 @@ CREATE TABLE borrow_records (
                                 book_id       INT,
                                 user_id       INT,            -- 从 users 表引用
                                 borrow_date   DATE,
+                                due_date      DATE,  -- 截止日期字段
                                 return_date   DATE,
 
                                 FOREIGN KEY (book_id) REFERENCES book(book_id),
                                 FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
+                            );
 
 
