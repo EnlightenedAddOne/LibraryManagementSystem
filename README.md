@@ -3,8 +3,9 @@ spring boot + Vue 的图书管理系统
 
 **main分支为前端，后端在back分支，还有服务器部署的分支**
 
+项目演示视频：[图书管理系统演示视频](https://www.bilibili.com/video/BV1uhguzJEYH/)
 
-
+---
 
 # 一、技术栈
 
